@@ -1,4 +1,4 @@
-install.packages("caTools")
+#install.packages("caTools")
 library(caTools)
 
 read_data <- function(file_path){
@@ -58,6 +58,7 @@ data$age <- normalizeCol(data$age)
 data$bmi <- normalizeCol(data$bmi)
 data$charges <- normalizeCol(data$charges)
 
+
 print("Eg of normalized data")
 print(data[1:10,])
 
@@ -72,5 +73,5 @@ predictions <- predict(model, newdata = test_set)
 
 pred_denorm <- denormalize(predictions, charges_min, charges_max)
 
-mse <- mean((pred_denorm - test_set$charges)^2)
-print(paste("Test MSE:", mse))
+mae <- mean(abs(pred_denorm - denormalize(test_set$charges, charges_min, charges_max)))
+print(paste("Test MAE:", mae))
